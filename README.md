@@ -15,3 +15,4 @@
 * cliccate sull'iconcina `+`
 * nel campo "Update URL" incollate [questo url](https://github.com/acavalin/hb_enhancements/raw/master/hellobank.user.js)
 * premete l'inconcina del floppy per salvare il tutto
+* cliccate su *0 min* nella colonna `Last  updated`
