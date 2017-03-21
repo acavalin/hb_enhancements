@@ -5,7 +5,7 @@
 // @include     https://banking.hellobank.it/it/home*
 // @icon        https://github.com/acavalin/hb_enhancements/raw/master/xm_icon.png
 // @downloadURL https://github.com/acavalin/hb_enhancements/raw/master/hellobank.user.js
-// @version     1.0.0
+// @version     1.1.0
 // @grant       none
 // ==/UserScript==
 
@@ -38,10 +38,11 @@ $('iframe[src*=Financial]').on('load', function () {
 $('.hellobank-header-row').hide(); // nascondi header
 
 // crea menu piu' semplice
-$('<style>#fixed-menu a:hover { background-color: #ccc; border-radius: 0.25rem; }</style>').appendTo('html > head');
+$('<style>#fixed-menu a:hover { background-color: #ccc; border-radius: 0.25rem; } #fixed-menu li.selected { background-color: #ccc; } </style>').appendTo('html > head');
 var menu_top = parseInt($('iframe[src*=Financial]').height()),
     stili = 'position: fixed; top: '+menu_top+'px; left: 0; border: 1px solid black; padding: 0.2rem; font-size: x-small; text-transform: capitalize; line-height: 1.5rem;',
-    menu  = $('<div id="fixed-menu" style="'+stili+'"></div>').appendTo('body');
+    menu  = $('<div id="fixed-menu" style="'+stili+'"><ul></ul></div>').appendTo('body'),
+    lista = $('<ul></ul>').appendTo(menu);
 // cicla tra i riquadri
 $('.tile.level0').hide().children('a').each(function () {
   var link = $(this);
@@ -51,13 +52,14 @@ $('.tile.level0').hide().children('a').each(function () {
   if (label.match(/profilo/)) label = 'Profilo/Docs';
   if (label.match(/Mutui/  )) label = 'Mutui/Prestiti';
   
-  $('<a href="#" class="linked">'+label+'</a>').appendTo(menu).data('link', link);
-  menu.append('<br>')
+  $('<a href="#" class="linked">'+label+'</a>').data('link', link).appendTo(lista).wrap('<li></li>');
 });
 
 // click onclick sulle voci di menu reali
 $('#fixed-menu').on('click', 'a.linked', function (ev) {
   ev.preventDefault();
+  $('#fixed-menu li').removeClass('selected');
+  $(this).parent().addClass('selected');
   $(this).data('link').click();
 });
 
@@ -67,15 +69,16 @@ $('iframe[src*=WelcomeBox]').on('load', function () {
   
   // aggiunta link msg non letti
   var msg_unread = frame_wb.find('.notify-box.mail span').text().trim();
-  menu.find('br:last').replaceWith('<hr style="margin: 0.2rem 0; border: 0; background-color: black;">');
-  $('<a href="#" class="linked"><b>'+msg_unread+'</b> unread msg</a>').appendTo(menu).
-    data('link', menu.find('a:contains(messaggi)').hide().next().remove().end());
+  lista.append('<li><hr style="margin: 0.2rem 0; border: 0; background-color: black;"></li>')
+  $('<a href="#" class="linked"><b>'+msg_unread+'</b> unread msg</a>').
+    data('link', menu.find('a:contains(messaggi)').parent().hide().end()).
+    appendTo(lista).wrap('<li></li>');
   
   // link toggle ADS
-  $('<br><a href="#" onclick="window.ads.toggle(); return false;">Toggle ADS</a>').appendTo(menu);
+  $('<li><a href="#" onclick="window.ads.toggle(); return false;">Toggle ADS</a></li>').appendTo(lista);
   
   // link per il logout
-  $('<br><a href="'+this.contentWindow.logoutUrl+'">Logout</a>').appendTo(menu);
+  $('<li><a href="'+this.contentWindow.logoutUrl+'">Logout</a></li>').appendTo(lista);
 });
 // -----------------------------------------------------------------------------
 });})(jQuery);
