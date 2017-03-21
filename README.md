@@ -16,3 +16,7 @@
 * nel campo "Update URL" incollate [questo url](https://github.com/acavalin/hb_enhancements/raw/master/hellobank.user.js)
 * premete l'inconcina del floppy per salvare il tutto
 * cliccate su *0 min* nella colonna `Last  updated`
+
+---
+
+This script has also his page on [Greasy Fork](https://greasyfork.org/en/scripts/28241-hellobank-enhancements).
