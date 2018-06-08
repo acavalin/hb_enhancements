@@ -5,7 +5,7 @@
 // @include     https://banking.hellobank.it/it/home*
 // @icon        data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAMAAABEpIrGAAAAwFBMVEUAlbgAgqsRg6gAiKsAi64CjrEAk7UQkbUAmLsAnbkpk7ErlLIAorcEob0emrcenrUSpMAAqsUAr8okqMIAtMgAtc8Av9IXuc4Aw9dMsMkhvdFEtcwNxtoAzN87vdMAzuBPu9BKwNAwyddPxNRFyNiEusU6z91Lzdx+v9FsxtpyxdOavcZ2yteCy9py0NyA0+F51uF13OWE3OJ/3emm5em37fPf5ObH8fLQ8fTm7O7X8PXm8/Th9vXq9/j0+fz+//zmPYTTAAAAAXRSTlMAQObYZgAAAAFiS0dEAIgFHUgAAAAJcEhZcwAACxMAAAsTAQCanBgAAAAHdElNRQfhBBMJFDZIJUV1AAABXUlEQVQ4y4WT61LCMBBG1yqXQlvbUmgpDLdy844gIijs+7+V324AnVHj+ZEvuzmzk8lMiIgWefIr+YKULOv/QZbJ+ahvYUS07FtZ0bRrZUrdf8AV7VBLSDwv1U0r9bxE0vM80zDCM/PM1DPmJSI/8PtRyFMgQqqIIAlB65w0FmdhzLz6LqSUNgGEcVOBsEQkB/5IpE5IXx1CYd6/gCCJCU1tUBKDRwix0mN+ksQE06D4KAyulQGEKI4jTIiMEAkQtq/KVgSwh6CchS9UOPCucRRCcM/8tlY2EKQDIVQo9AGEganlktKBIOGH5J8E3fgd5geEu968mAa5ggi6cUWQFEkhNwC3zJ1AEUFycjfR2qWgCm4gVBURJPe80zqgoAwwoV1W2hAkIZgG6dooCt/UblE0JIfD3kkoWalQzS6UKLiyEtD80sqcqOZYqMnnrPx9XjHfe153Ln7iOHXMp0/QJVvdEQQalwAAAABJRU5ErkJggg==
 // @downloadURL https://github.com/acavalin/hb_enhancements/raw/master/hellobank.user.js
-// @version     1.1.1
+// @version     1.1.2
 // @grant       none
 // ==/UserScript==
 
@@ -26,6 +26,8 @@ $('iframe[src*=Financial]').on('load', function () {
     find('.financial-state .title-wrapper').hide().
     next('.scroller-wrapper').css('margin', 'auto').css('float', 'none').
     find('.block-container').css('width', '100%');
+  $(this).contents().find('div.financial-block.bilancio').css('width', '10em').css('visibility', 'hidden');
+  $(this).contents().find('div.cf > div.scroller-wrapper, #financialscroller').css('width', '100%');
 });
 
 (function hide_footer () {
